@@ -25,7 +25,7 @@ public class DatabaseProvider {
     public DatabaseProvider() throws SQLException {
         getConnection();
     }
-    
+
     /**
      * Connection to Kamailio MySQL database.
      * @throws Exception
