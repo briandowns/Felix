@@ -15,26 +15,39 @@
 
 package com.github.bdowns328.felix;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseProvider {
     private String delSql = "DELETE FROM dispatcher WHERE description in (?)";
     private String addSql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES\" +\n" +
             "                    \"(?, ?, ?, ?, ?, ?, ?)";
 
-    public Connection getConnection() {
-
+    /**
+     * Connection to Kamailio MySQL database.
+     * @throws Exception
+     * @return Connection
+     */
+    public static Connection getConnection() throws Exception {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://" + DBHOST + "/" + DATABASE + "?user=" + DBUSER + "&password=" + DBPASS);
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return(conn);
     }
 
+    /**
+     * Remove entry from the Kamailio dispatcher.
+     */
     public void removeEntry() {
         try {
             Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);
             Statement stmt = dbConn.createStatement();
-            String sql = "DELETE FROM dispatcher WHERE description in (?)";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(delSql);
             preparedStatement.setString(1, fields[1]);
             preparedStatement.executeUpdate();
             dbConn.commit();
@@ -46,14 +59,15 @@ public class DatabaseProvider {
         }
     }
 
+    /**
+     * Add entry to the Kamailio dispatcher.
+     */
     public void addEntry() {
         try {
             Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);
             Statement stmt = dbConn.createStatement();
-            String sql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES" +
-                    "(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(addSql);
 
             for (int i = 1; i < fields.length; i++) {
                 preparedStatement.setString(i, fields[i]);
