@@ -82,7 +82,7 @@ public class RegistrationHandler {
                 if (DEBUG) {
                     log(messageContainer.iterator().next());
                 }
-                String[] fields = message.split("\\t");
+                String[] fields = message.split(REDIS_DELIMITER);
                 for (int i = 0; i < fields.length - 1; i++) {
                     if (fields[i] == null) {
                         log("NULL FIELD: " + i + " : " + fields[i]);
@@ -90,42 +90,10 @@ public class RegistrationHandler {
                 }
                 if (fields[0].contentEquals("CHECKIN")) {
                     log("Adding Entry...");
-                    try {
-                        Connection dbConn = getConnection();
-                        dbConn.setAutoCommit(false);
-                        Statement stmt = dbConn.createStatement();
-                        String sql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES" +
-                                "(?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-                        for (int i = 1; i < fields.length; i++) {
-                            preparedStatement.setString(i, fields[i]);
-                        }
-                        preparedStatement.executeUpdate();
-                        dbConn.commit();
-                        stmt.close();
-                        dbConn.close();
-                        restartKamailioDaemon();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 } else if (fields[0].contentEquals("CHECKOUT")) {
                     log("Deleting Entry...");
-                    try {
-                        Connection dbConn = getConnection();
-                        dbConn.setAutoCommit(false);
-                        Statement stmt = dbConn.createStatement();
-                        String sql = "DELETE FROM dispatcher WHERE description in (?)";
-                        PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-                        preparedStatement.setString(1, fields[1]);
-                        preparedStatement.executeUpdate();
-                        dbConn.commit();
-                        stmt.close();
-                        dbConn.close();
-                        restartKamailioDaemon();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
                 } else {
                     log("ERROR:  Received incorrect event.");
                 }
@@ -139,7 +107,7 @@ public class RegistrationHandler {
                 try {
                     Jedis jedis = new Jedis(REDISSERVER, REDISPORT, TIMEOUT);
                     while (true) {
-                        jedis.subscribe(jedisPubSub, "kam");
+                        jedis.subscribe(jedisPubSub, KAM_CHANNEL);
                     }
                 } catch (Exception e) {
                     log("ERROR: " + e.getMessage());
@@ -166,5 +134,9 @@ public class RegistrationHandler {
     private static void log(String string, Object... args) {
         long millisSinceStart = System.currentTimeMillis() - STARTMILLIS;
         System.out.printf("%20s %6d %s\n", Thread.currentThread().getName(), millisSinceStart, String.format(string, args));
+    }
+
+    public static void main(String[] args) {
+        run();
     }
 }

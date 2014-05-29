@@ -4,7 +4,7 @@
 
 ## Overview
 Felix is an application to be run on Asterisk servers and Kamalio servers when there's<br />
-and environment needing a process to check-in and check-out Asterisk server from the<br />
+an environment needing a process to register in and out carriers and Asterisk servers from the<br />
 cluster.
 
 

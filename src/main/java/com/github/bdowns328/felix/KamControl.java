@@ -25,7 +25,7 @@ public class KamControl {
      * @param dispatchCommand, String
      * @return output, String
      */
-    public String controlKamailioDaemon(String dispatchCommand) {
+    public static String controlKamailioDaemon(String dispatchCommand) {
         StringBuilder output = new StringBuilder();
         Process p;
         try {

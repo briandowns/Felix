@@ -20,7 +20,7 @@ import java.sql.*;
 public class DatabaseProvider {
     private String delSql = "DELETE FROM dispatcher WHERE description in (?)";
     private String addSql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES\" +\n" +
-            "                    \"(?, ?, ?, ?, ?, ?, ?)";
+            "\"(?, ?, ?, ?, ?, ?, ?)";
 
     public DatabaseProvider() throws SQLException {
         getConnection();
@@ -34,7 +34,8 @@ public class DatabaseProvider {
     private static Connection getConnection() throws SQLException {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://" + DBHOST + "/" + DATABASE + "?user=" + DBUSER + "&password=" + DBPASS);
+            conn = DriverManager.getConnection("jdbc:mysql://" + DBHOST + "/" + DATABASE +
+                    "?user=" + DBUSER + "&password=" + DBPASS);
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
@@ -57,8 +58,8 @@ public class DatabaseProvider {
             dbConn.commit();
             stmt.close();
             dbConn.close();
-            restartKamailioDaemon();
-        } catch (Exception e) {
+            KamControl.controlKamailioDaemon("reload");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -80,8 +81,8 @@ public class DatabaseProvider {
             dbConn.commit();
             stmt.close();
             dbConn.close();
-            restartKamailioDaemon();
-        } catch (Exception e) {
+            KamControl.controlKamailioDaemon("reload");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
