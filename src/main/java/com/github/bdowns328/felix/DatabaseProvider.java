@@ -28,7 +28,7 @@ public class DatabaseProvider {
 
     /**
      * Connection to Kamailio MySQL database.
-     * @throws Exception
+     * @throws SQLException
      * @return Connection
      */
     private static Connection getConnection() throws SQLException {
@@ -48,6 +48,7 @@ public class DatabaseProvider {
      * Remove entry from the Kamailio dispatcher.
      */
     public void removeEntry() {
+
         try {
             Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);
