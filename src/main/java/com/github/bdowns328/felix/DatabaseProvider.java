@@ -22,12 +22,16 @@ public class DatabaseProvider {
     private String addSql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES\" +\n" +
             "                    \"(?, ?, ?, ?, ?, ?, ?)";
 
+    public DatabaseProvider() throws SQLException {
+        getConnection();
+    }
+    
     /**
      * Connection to Kamailio MySQL database.
      * @throws Exception
      * @return Connection
      */
-    public static Connection getConnection() throws Exception {
+    private static Connection getConnection() throws SQLException {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection("jdbc:mysql://" + DBHOST + "/" + DATABASE + "?user=" + DBUSER + "&password=" + DBPASS);
