@@ -88,10 +88,10 @@ public class RegistrationHandler {
                 }
                 if (fields[0].contentEquals("CHECKIN")) {
                     log("Adding Entry...");
-
+                    KamControl.controlKamailioDispatcher("reload");
                 } else if (fields[0].contentEquals("CHECKOUT")) {
                     log("Deleting Entry...");
-
+                    KamControl.controlKamailioDispatcher("reload");
                 } else {
                     log("ERROR:  Received incorrect event.");
                 }

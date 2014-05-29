@@ -47,7 +47,7 @@ public class DatabaseProvider {
     /**
      * Remove entry from the Kamailio dispatcher.
      */
-    public void removeEntry() {
+    public static void removeEntry() {
 
         try {
             Connection dbConn = getConnection();
@@ -59,7 +59,6 @@ public class DatabaseProvider {
             dbConn.commit();
             stmt.close();
             dbConn.close();
-            KamControl.controlKamailioDaemon("reload");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,13 +67,12 @@ public class DatabaseProvider {
     /**
      * Add entry to the Kamailio dispatcher.
      */
-    public void addEntry() {
+    public static void addEntry() {
         try {
             Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);
             Statement stmt = dbConn.createStatement();
             PreparedStatement preparedStatement = dbConn.prepareStatement(addSql);
-
             for (int i = 1; i < fields.length; i++) {
                 preparedStatement.setString(i, fields[i]);
             }
@@ -82,7 +80,6 @@ public class DatabaseProvider {
             dbConn.commit();
             stmt.close();
             dbConn.close();
-            KamControl.controlKamailioDaemon("reload");
         } catch (SQLException e) {
             e.printStackTrace();
         }
