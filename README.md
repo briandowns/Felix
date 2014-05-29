@@ -13,6 +13,13 @@ A small agent runs on each Asterisk server and each Kamailio server.  They commu
 each other via Redis Pub/Sub.  Through it the Asterisk servers let the Kamailio server(s) know<br />
 whether they are or aren't available to receive calls.
 
+### Tasks
+
+- [ ] Testing
+  - [ ] Write tests
+  - [ ] Make them work...
+- [ ] Decide on how configuration will be managed
+
 ### Authors
 * Brian Downs
 
