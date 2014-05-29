@@ -26,8 +26,8 @@ import java.util.concurrent.CountDownLatch;
 
 public class RegistrationHandler {
     private static final long STARTMILLIS = System.currentTimeMillis();
-    private ArrayList<String> messageContainer = new ArrayList<String>();
-    private CountDownLatch messageReceivedLatch = new CountDownLatch(1);
+    private static ArrayList<String> messageContainer = new ArrayList<String>();
+    private static CountDownLatch messageReceivedLatch = new CountDownLatch(1);
     private static final boolean DEBUG = true;
 
     private Properties getConfigutation() {
@@ -119,7 +119,7 @@ public class RegistrationHandler {
      * Main worker thread.
      * @throws java.lang.InterruptedException
      */
-    private void run() throws InterruptedException {
+    private static void run() throws InterruptedException {
         JedisPubSub jedisPubSub = setupSubscriber();
         messageReceivedLatch.await();
         log("Received message: %s", messageContainer.iterator().next());
@@ -134,7 +134,7 @@ public class RegistrationHandler {
         System.out.printf("%20s %6d %s\n", Thread.currentThread().getName(), millisSinceStart, String.format(string, args));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
         run();
     }
 }
