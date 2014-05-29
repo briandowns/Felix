@@ -22,4 +22,9 @@ public class KamControlTest {
     public void testControlKamailioDispatcher() throws Exception {
 
     }
+
+    @Test
+    public void TestControlKamailioDaemon() throws Exception {
+
+    }
 }

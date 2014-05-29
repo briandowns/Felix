@@ -43,4 +43,20 @@ public class KamControl {
         }
         return(output.toString());
     }
+
+    /**
+     * Control the Kamailio Daemon.
+     * @param daemonCommand, String
+     */
+    public static void controlKamailioDaemon(String daemonCommand) {
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec(daemonCommand);
+            p.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
