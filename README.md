@@ -19,6 +19,7 @@ whether they are or aren't available to receive calls.
   - [ ] Write tests
   - [ ] Make them work...
 - [ ] Decide on how configuration will be managed
+- [ ] Decided how to handle CLI arguments
 
 ### Authors
 * Brian Downs
