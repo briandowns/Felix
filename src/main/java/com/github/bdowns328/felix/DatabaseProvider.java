@@ -22,8 +22,9 @@ public class DatabaseProvider {
     private String addSql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES\" +\n" +
             "\"(?, ?, ?, ?, ?, ?, ?)";
 
-    public DatabaseProvider() throws SQLException {
-        getConnection();
+    public Connection DatabaseProvider() throws SQLException {
+
+        return(getConnection());
     }
 
     /**
@@ -46,11 +47,10 @@ public class DatabaseProvider {
 
     /**
      * Remove entry from the Kamailio dispatcher.
+     * @param dbConn, Connectio
      */
-    public static void removeEntry() {
-
+    public static void removeEntry(Connection dbConn) {
         try {
-            Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);
             Statement stmt = dbConn.createStatement();
             PreparedStatement preparedStatement = dbConn.prepareStatement(delSql);
@@ -66,8 +66,9 @@ public class DatabaseProvider {
 
     /**
      * Add entry to the Kamailio dispatcher.
+     * @param dbConn, Connection
      */
-    public static void addEntry() {
+    public static void addEntry(Connection dbConn) {
         try {
             Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);

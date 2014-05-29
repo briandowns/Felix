@@ -30,26 +30,6 @@ public class RegistrationHandler {
     private static CountDownLatch messageReceivedLatch = new CountDownLatch(1);
     private static final boolean DEBUG = true;
 
-    private Properties getConfigutation() {
-        Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            input = new FileInputStream("config.properties");
-            prop.load(input);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return(prop);
-    }
-
     private JedisPubSub setupSubscriber() {
         final JedisPubSub jedisPubSub = new JedisPubSub() {
             @Override
