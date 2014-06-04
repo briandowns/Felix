@@ -16,5 +16,12 @@
 package com.github.bdowns328.felix;
 
 public class ReadinessVerification {
+    /**
+     * Check the installed Java version.
+     * @return Integer
+     */
+    private Integer getJavaVersion() {
+        return(Integer.parseInt(System.getProperty("java.version").split("\\.")[1]));
+    }
 
 }
