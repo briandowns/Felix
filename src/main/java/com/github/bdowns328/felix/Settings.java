@@ -15,44 +15,41 @@
 
 package com.github.bdowns328.felix;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import com.beust.jcommander.Parameters;
+import com.beust.jcommander.Parameter;
 
+@Parameters(separators = "=", resourceBundle = "MessageBundle")
 public class Settings {
-    private String configFile;
+    @Parameter(names = "--help", help = true)
+    private boolean help;
 
-    /**
-     * Constructor
-     * @param cf, String
-     */
-    public Settings(String cf) {
-        configFile = cf;
-        processConfig();
-    }
+    @Parameter(names = "--debug", description = "Turn on debug")
+    private boolean debug;
 
-    /**
-     * Process provided file into a properties object.
-     * @return prop, Properties
-     */
-    private Properties processConfig() {
-        Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            input = new FileInputStream(configFile);
-            prop.load(input);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return(prop);
-    }
+    @Parameter(names = "--redis-server", description = "Redis server address", required = true)
+    private String redisServer;
+
+    @Parameter(names = "--redis-port", description = "Redis server port", required = true)
+    private int redisPort;
+
+    @Parameter(names = "--redis-channel", description = "Redis pub/sub channel", required = true)
+    private String redisChannel;
+
+    @Parameter(names = "--redis-delimiter", description = "Redis server address", required = true)
+    private char redisDelimiter;
+
+    @Parameter(names = "--redis-timeout", description = "Redis server timeout", required = true)
+    private int redisTimeout;
+
+    @Parameter(names = "--db-server", description = "DB server address", required = true)
+    private String databaseServer;
+
+    @Parameter(names = "--db-user", description = "DB username", required = true)
+    private String databaseUser;
+
+    @Parameter(names = "--db-pass", description = "DB password", required = true)
+    private String databasePassword;
+
+    @Parameter(names = "--db-name", description = "DB name", required = true)
+    private String databaseName;
 }

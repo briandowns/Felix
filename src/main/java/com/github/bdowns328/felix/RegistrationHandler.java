@@ -109,7 +109,9 @@ public class RegistrationHandler {
         System.out.printf("%20s %6d %s\n", Thread.currentThread().getName(), millisSinceStart, String.format(string, args));
     }
 
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
+
+        Settings settings = new Settings(configFile);
         run();
     }
 }
