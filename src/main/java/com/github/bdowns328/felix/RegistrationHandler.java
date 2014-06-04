@@ -17,11 +17,7 @@ package com.github.bdowns328.felix;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 public class RegistrationHandler {
@@ -34,11 +30,13 @@ public class RegistrationHandler {
         final JedisPubSub jedisPubSub = new JedisPubSub() {
             @Override
             public void onUnsubscribe(String channel, int subscribedChannels) {
+
                 log("Unsubscribed...");
             }
 
             @Override
             public void onSubscribe(String channel, int subscribedChannels) {
+
                 log("Subscribed and listening...");
             }
 
@@ -79,17 +77,14 @@ public class RegistrationHandler {
             }
         };
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Jedis jedis = new Jedis(REDISSERVER, REDISPORT, TIMEOUT);
-                    while (true) {
-                        jedis.subscribe(jedisPubSub, KAM_CHANNEL);
-                    }
-                } catch (Exception e) {
-                    log("ERROR: " + e.getMessage());
+        new Thread(() -> {
+            try {
+                Jedis jedis = new Jedis(REDISSERVER, REDISPORT, TIMEOUT);
+                while (true) {
+                    jedis.subscribe(jedisPubSub, KAM_CHANNEL);
                 }
+            } catch (Exception e) {
+                log("ERROR: " + e.getMessage());
             }
         }, "subscriberThread").start();
         return (jedisPubSub);
@@ -99,7 +94,7 @@ public class RegistrationHandler {
      * Main worker thread.
      * @throws java.lang.InterruptedException
      */
-    private static void run() throws InterruptedException {
+    private void run() throws InterruptedException {
         JedisPubSub jedisPubSub = setupSubscriber();
         messageReceivedLatch.await();
         log("Received message: %s", messageContainer.iterator().next());

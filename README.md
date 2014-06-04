@@ -1,12 +1,11 @@
 # Felix
 
-
-
 ## Overview
 Felix is an application to be run on Asterisk servers and Kamalio servers when there's<br />
 an environment needing a process to register in and out carriers and Asterisk servers from the<br />
-cluster.
+cluster.<br /><br />
 
+This project is implemented using Java 8.<br /> 
 
 ## How It Works
 A small agent runs on each Asterisk server and each Kamailio server.  They communicate with<br />

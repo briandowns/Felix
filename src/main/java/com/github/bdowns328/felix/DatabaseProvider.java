@@ -22,9 +22,8 @@ public class DatabaseProvider {
     private String addSql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES\" +\n" +
             "\"(?, ?, ?, ?, ?, ?, ?)";
 
-    public Connection DatabaseProvider() throws SQLException {
-
-        return(getConnection());
+    public DatabaseProvider() throws SQLException {
+        getConnection();
     }
 
     /**
@@ -70,7 +69,6 @@ public class DatabaseProvider {
      */
     public static void addEntry(Connection dbConn) {
         try {
-            Connection dbConn = getConnection();
             dbConn.setAutoCommit(false);
             Statement stmt = dbConn.createStatement();
             PreparedStatement preparedStatement = dbConn.prepareStatement(addSql);

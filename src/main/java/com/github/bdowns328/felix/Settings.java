@@ -23,6 +23,10 @@ import java.util.Properties;
 public class Settings {
     private String configFile;
 
+    /**
+     * Constructor
+     * @param cf, String
+     */
     public Settings(String cf) {
         configFile = cf;
         processConfig();
