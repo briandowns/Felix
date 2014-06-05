@@ -1,9 +1,11 @@
+generated
+*~
 *.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
@@ -14,3 +16,14 @@ hs_err_pid*
 # IntelliJ
 .idea
 *.iml
+*.ipr
+*.iws
+target
+.project
+.settings
+.classpath
+.buildpath
+doc
+build
+out
+.DS_Store
