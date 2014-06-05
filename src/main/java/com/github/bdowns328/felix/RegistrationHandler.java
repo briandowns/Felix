@@ -15,6 +15,7 @@
 
 package com.github.bdowns328.felix;
 
+import com.beust.jcommander.JCommander;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class RegistrationHandler {
             }
         };
 
-        new Thread(() -> {
+        new Thread( () -> {
             try {
                 Jedis jedis = new Jedis(REDISSERVER, REDISPORT, TIMEOUT);
                 while (true) {
@@ -110,8 +111,14 @@ public class RegistrationHandler {
     }
 
     public static void main(String[] args) throws InterruptedException {
-
-        Settings settings = new Settings(configFile);
-        run();
+        Settings settings = new Settings();
+        JCommander jcmd = new JCommander(settings);
+        try {
+            jcmd.parse(args);
+            this.run();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            jcmd.usage();
+        }
     }
 }
