@@ -16,6 +16,7 @@
 package com.github.bdowns328.felix;
 
 import com.beust.jcommander.JCommander;
+import com.github.bdowns328.felix.kamailio.KamControl;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import java.util.ArrayList;
@@ -118,23 +119,5 @@ public class RegistrationHandler {
     private static void log(String string, Object... args) {
         long millisSinceStart = System.currentTimeMillis() - STARTMILLIS;
         System.out.printf("%20s %6d %s\n", Thread.currentThread().getName(), millisSinceStart, String.format(string, args));
-    }
-
-    /**
-     * Point of entry
-     * @param args String
-     * @throws InterruptedException
-     */
-    public static void main(String[] args) throws InterruptedException {
-        Settings settings = new Settings();
-        JCommander jcmd = new JCommander(settings, args);
-        jcmd.setProgramName("felix");
-        try {
-            jcmd.parse(args);
-            new RegistrationHandler(jcmd).run();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            jcmd.usage();
-        }
     }
 }

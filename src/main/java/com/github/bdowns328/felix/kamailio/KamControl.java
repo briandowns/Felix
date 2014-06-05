@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.github.bdowns328.felix;
+package com.github.bdowns328.felix.kamailio;
 
 import java.io.BufferedReader;
 import java.io.IOException;
