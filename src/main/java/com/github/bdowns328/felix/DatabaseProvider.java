@@ -18,6 +18,7 @@ package com.github.bdowns328.felix;
 import java.sql.*;
 
 public class DatabaseProvider {
+
     private String delSql = "DELETE FROM dispatcher WHERE description in (?)";
     private String addSql = "INSERT INTO dispatcher (id, setid, destination, flags, priority, attrs, description) VALUES\" +\n" +
             "\"(?, ?, ?, ?, ?, ?, ?)";

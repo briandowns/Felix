@@ -17,6 +17,10 @@ package com.github.bdowns328.felix;
 
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.Parameter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 @SuppressWarnings("unused")
 @Parameters(separators = "=", resourceBundle = "MessageBundle")
@@ -45,6 +49,30 @@ public final class Settings {
             description = "Log file to use"
     )
     private String logFile;
+
+    /**
+     * Process provided file into a properties object.
+     * @return prop, Properties
+     */
+    private Properties processConfig() {
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            input = new FileInputStream(configFile);
+            prop.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return (prop);
+    }
 
     /**
      * Display help when called

@@ -16,6 +16,7 @@
 package com.github.bdowns328.felix;
 
 public class ReadinessVerification {
+
     /**
      * Check the installed Java version.
      * @return Integer

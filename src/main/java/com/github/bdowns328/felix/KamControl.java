@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class KamControl {
+
     /**
      * Control the Kamailio Dispatcher module data.
      * @param dispatchCommand, String

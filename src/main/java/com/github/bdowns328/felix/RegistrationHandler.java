@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class RegistrationHandler {
+
     private static JCommander config;
     private static final long STARTMILLIS = System.currentTimeMillis();
     private static ArrayList<String> messageContainer = new ArrayList<String>();
