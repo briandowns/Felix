@@ -35,67 +35,16 @@ public final class Settings {
     private boolean debug;
 
     @Parameter(
-            names = "--redis-server",
-            description = "Redis server address",
-            required = true
+            names = { "-c", "--config" },
+            description = "Path to config file to use"
     )
-    private String redisServer;
+    private String configFile;
 
     @Parameter(
-            names = { "-rp", "--redis-port" },
-            description = "Redis server port",
-            required = true
+            names = { "-l", "--log" },
+            description = "Log file to use"
     )
-    private int redisPort;
-
-    @Parameter(
-            names = { "-rc", "--redis-channel" },
-            description = "Redis pub/sub channel",
-            required = true
-    )
-    private String redisChannel;
-
-    @Parameter(
-            names = { "-rd", "--redis-delimiter" },
-            description = "Redis server address",
-            required = true
-    )
-    private char redisDelimiter;
-
-    @Parameter(
-            names = { "-rt", "--redis-timeout" },
-            description = "Redis server timeout",
-            required = true
-    )
-    private int redisTimeout;
-
-    @Parameter(
-            names = { "-ds", "--db-server" },
-            description = "DB server address",
-            required = true
-    )
-    private String databaseServer;
-
-    @Parameter(
-            names = { "-du", "--db-user" },
-            description = "DB username",
-            required = true
-    )
-    private String databaseUser;
-
-    @Parameter(
-            names = { "-dp", "--db-pass" },
-            description = "DB password",
-            required = true
-    )
-    private String databasePassword;
-
-    @Parameter(
-            names = { "-dn", "--db-name" },
-            description = "DB name",
-            required = true
-    )
-    private String databaseName;
+    private String logFile;
 
     /**
      * Display help when called
@@ -103,6 +52,22 @@ public final class Settings {
      */
     public boolean isHelp() {
         return(help);
+    }
+
+    /**
+     * Put in debug when called
+     * @return boolean
+     */
+    public boolean isDebug() {
+        return(debug);
+    }
+
+    /**
+     * Get provided log file
+     * @return String
+     */
+    public String getLogFile() {
+        return(logFile);
     }
 
     /**
