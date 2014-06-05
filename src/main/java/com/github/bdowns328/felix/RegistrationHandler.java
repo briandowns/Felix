@@ -22,10 +22,16 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class RegistrationHandler {
+    private static JCommander config;
     private static final long STARTMILLIS = System.currentTimeMillis();
     private static ArrayList<String> messageContainer = new ArrayList<String>();
     private static CountDownLatch messageReceivedLatch = new CountDownLatch(1);
     private static final boolean DEBUG = true;
+
+    public RegistrationHandler(JCommander jcmd) {
+        config = jcmd;
+    }
+
 
     private JedisPubSub setupSubscriber() {
         final JedisPubSub jedisPubSub = new JedisPubSub() {
@@ -65,11 +71,11 @@ public class RegistrationHandler {
                         log("NULL FIELD: " + i + " : " + fields[i]);
                     }
                 }
-                if (fields[0].contentEquals("CHECKIN")) {
-                    log("Adding Entry...");
+                if (fields[0].contentEquals("CHECK-IN")) {
+                    log("Adding Entry");
                     KamControl.controlKamailioDispatcher("reload");
-                } else if (fields[0].contentEquals("CHECKOUT")) {
-                    log("Deleting Entry...");
+                } else if (fields[0].contentEquals("CHECK-OUT")) {
+                    log("Deleting Entry");
                     KamControl.controlKamailioDispatcher("reload");
                 } else {
                     log("ERROR:  Received incorrect event.");
@@ -110,12 +116,18 @@ public class RegistrationHandler {
         System.out.printf("%20s %6d %s\n", Thread.currentThread().getName(), millisSinceStart, String.format(string, args));
     }
 
+    /**
+     * Point of entry
+     * @param args String
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         Settings settings = new Settings();
-        JCommander jcmd = new JCommander(settings);
+        JCommander jcmd = new JCommander(settings, args);
+        jcmd.setProgramName("felix");
         try {
             jcmd.parse(args);
-            this.run();
+            new RegistrationHandler(jcmd).run();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             jcmd.usage();
