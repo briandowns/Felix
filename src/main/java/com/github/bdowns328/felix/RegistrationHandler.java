@@ -16,7 +16,7 @@
 package com.github.bdowns328.felix;
 
 import com.beust.jcommander.JCommander;
-import com.github.bdowns328.felix.kamailio.KamControl;
+import com.github.bdowns328.felix.kamailio.Controller;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ import java.util.concurrent.CountDownLatch;
 
 public class RegistrationHandler {
 
-    private static JCommander config;
     private static final long STARTMILLIS = System.currentTimeMillis();
     private static ArrayList<String> messageContainer = new ArrayList<String>();
     private static CountDownLatch messageReceivedLatch = new CountDownLatch(1);
@@ -75,10 +74,10 @@ public class RegistrationHandler {
                 }
                 if (fields[0].contentEquals("CHECK-IN")) {
                     log("Adding Entry");
-                    KamControl.controlKamailioDispatcher("reload");
+                    Controller.controlKamailioDispatcher("reload");
                 } else if (fields[0].contentEquals("CHECK-OUT")) {
                     log("Deleting Entry");
-                    KamControl.controlKamailioDispatcher("reload");
+                    Controller.controlKamailioDispatcher("reload");
                 } else {
                     log("ERROR:  Received incorrect event.");
                 }
@@ -106,7 +105,7 @@ public class RegistrationHandler {
      * Main worker thread.
      * @throws java.lang.InterruptedException
      */
-    private void run() throws InterruptedException {
+    public void run() throws InterruptedException {
         JedisPubSub jedisPubSub = setupSubscriber();
         messageReceivedLatch.await();
         log("Received message: %s", messageContainer.iterator().next());

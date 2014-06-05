@@ -19,7 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class KamControl {
+public class Controller {
 
     /**
      * Control the Kamailio Dispatcher module data.
