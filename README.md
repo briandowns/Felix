@@ -7,7 +7,7 @@ cluster.<br /><br />
 
 **Requirements**
 * [Maven 2](http://maven.apache.org/)
-* [Java JDK 8](https://jdk8.java.net/download.html)
+* [Java JDK 7](https://jdk7.java.net/download.html)
 
 ### How It Works
 A small agent runs on each Asterisk server and each Kamailio server.  They communicate with<br />

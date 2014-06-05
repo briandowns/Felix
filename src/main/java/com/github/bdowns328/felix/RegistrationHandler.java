@@ -85,14 +85,17 @@ public class RegistrationHandler {
             }
         };
 
-        new Thread( () -> {
-            try {
-                Jedis jedis = new Jedis(REDISSERVER, REDISPORT, TIMEOUT);
-                while (true) {
-                    jedis.subscribe(jedisPubSub, KAM_CHANNEL);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Jedis jedis = new Jedis(REDISSERVER, REDISPORT, TIMEOUT);
+                    while (true) {
+                        jedis.subscribe(jedisPubSub, KAM_CHANNEL);
+                    }
+                } catch (Exception e) {
+                    log("ERROR: " + e.getMessage());
                 }
-            } catch (Exception e) {
-                log("ERROR: " + e.getMessage());
             }
         }, "subscriberThread").start();
         return (jedisPubSub);
